@@ -14,35 +14,19 @@ void Input() {
 }
 
 
-int Calc(int& v, int i) {
-    set<int> s;
-
-    for (int j = i; j <= n; j++) {
-        s.insert(arr[i]);
-
-        int sMin = *s.begin(), sMax = *s.rbegin();
-
-        if (sMin < x && x < sMax) {
-            if (sMax - sMin <= 2 * x) v = (sMax + sMin) / 2;
-            else return j;
-        } else {
-            if (sMax - sMin <= x) v = (sMax + sMin) / 2;
-            else return j;
-        }
-    }
-
-    return n + 1;
-}
-
 void Process() {
-    int result = 0, v = 0;
+    int Max = 0, Min = INT_MAX, result = 0;
 
-    Calc(v, 1);
+    for (int i = 1; i <= n; i++) {
+        Max = max(Max, arr[i]);
 
-    for (int i = 1; i <= n; i++) if (abs(v - arr[i]) > x) {
-        i = Calc(v, i);
+        Min = min(Min, arr[i]);
 
-        result++;
+        if (Max - Min > 2 * x) {
+            result++;
+
+            Max = Min = arr[i];
+        }
     }
 
     cout << result << '\n';
